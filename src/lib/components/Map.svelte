@@ -1,19 +1,36 @@
 <script lang="ts">
-  import { MapLibre, Marker, DefaultMarker, Popup } from 'svelte-maplibre';
+  import { MapLibre, Marker, Popup, MapEvents } from 'svelte-maplibre';
   import type { Toilet } from '$lib/types';
+  import { createEventDispatcher } from 'svelte';
 
   export let toilets: Toilet[];
+  export let selectedToilet: Toilet | null = null;
 
-  let map: maplibregl.Map;
+
+  let map: maplibregl.Map | null = null;
+  const dispatch = createEventDispatcher();
+
+  // Teardown function apparently
+  onMount(() => {
+    return () => {
+      if (map) {
+        map.remove();
+      }
+    };
+  });
+
+  function showLocation(e: CustomEvent<MapMouseEvent>) {
+    console.log(e.detail.lngLat);
+  }
 
   function handleMapLoad(event: CustomEvent<maplibregl.Map>) {
     map = event.detail;
-    if (toilets.length > 0) {
-      map.flyTo({
-        center: [toilets[0].lon, toilets[0].lat],
-        zoom: 13
-      });
-    }
+    // if (toilets.length > 0) {
+    //   map.flyTo({
+    //     center: [toilets[0].lon, toilets[0].lat],
+    //     zoom: 13
+    //   });
+    // }
   }
 
   function findNearestToilet(userLat: number, userLon: number): Toilet {
@@ -42,21 +59,54 @@
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     return R * c;
   }
+
+  function handleMarkerClick(toilet: Toilet) {
+    if (map) {
+      map.flyTo({
+        center: [toilet.lon, toilet.lat],
+        zoom: 14,
+        speed: 1.5
+      });
+    }
+    dispatch('selectToilet', toilet);
+  }
+
+  $: if (selectedToilet && map) {
+    map.flyTo({
+      center: [selectedToilet.lon, selectedToilet.lat],
+      zoom: 14,
+      speed: 1.5
+    });
+  }
 </script>
+
+<!-- center={[101.69446708913938, 3.159171252389754]} -->
 
 <div class="w-full h-full relative">
   <MapLibre
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     standardControls
-    center={[0, 0]}
-    zoom={2}
+    center={[-73.98, 40.75]}
+    zoom={10}
+    on:load={handleMapLoad}
   >
+  <MapEvents on:click={showLocation}/>
     {#each toilets as toilet}
-      <DefaultMarker lngLat={[toilet.lon, toilet.lat]}>
+      <Marker lngLat={[toilet.lon, toilet.lat]} on:click={() => handleMarkerClick(toilet)}>
+        <div class="cursor-pointer text-2xl" class:selected={selectedToilet === toilet}>
+          🚽
+        </div>
         <Popup>
           <strong>{toilet.name}</strong>
         </Popup>
-      </DefaultMarker>
+      </Marker>
     {/each}
   </MapLibre>
 </div>
+
+<style>
+    .selected {
+    color: #4CAF50;
+    font-size: 32px;
+  }
+</style>

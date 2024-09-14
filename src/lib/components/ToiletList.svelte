@@ -1,13 +1,25 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte';
   import type { Toilet } from "$lib/types";
 
   export let toilets: Toilet[];
+  export let selectedToilet: Toilet | null = null;
+
+  const dispatch = createEventDispatcher();
+
+  function handleToiletClick(toilet: Toilet) {
+    dispatch('selectToilet', toilet);
+  }
 </script>
 
 <div class="bg-white shadow overflow-hidden sm:rounded-md">
   <ul class="divide-y divide-gray-200">
     {#each toilets as toilet}
-      <li class="px-4 py-4 sm:px-6">
+      <li 
+        class="px-4 py-4 sm:px-6 cursor-pointer hover:bg-gray-50 transition-colors duration-150"
+        class:bg-blue-100={selectedToilet === toilet}
+        on:click={() => handleToiletClick(toilet)}
+      >
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-indigo-600 truncate">
             {toilet.name}
