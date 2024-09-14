@@ -104,7 +104,11 @@
 </div>
 
 <style>
-.pin {
+  .marker {
+    position: relative;
+    cursor: pointer;
+  }
+  .pin {
     width: 30px;
     height: 30px;
     border-radius: 50% 50% 50% 0;
@@ -142,7 +146,7 @@
   .selected .pulse {
     background: rgba(76, 175, 80, 0.2);
   }
-  .pulse:after {
+  .selected .pulse:after {
     content: "";
     border-radius: 50%;
     height: 40px;
@@ -152,11 +156,8 @@
     animation: pulsate 1s ease-out;
     animation-iteration-count: infinite;
     opacity: 0;
-    box-shadow: 0 0 1px 2px #00cae9;
-    animation-delay: 1.1s;
-  }
-  .selected .pulse:after {
     box-shadow: 0 0 1px 2px #4CAF50;
+    animation-delay: 1.1s;
   }
   @keyframes pulsate {
     0% {
