@@ -1,0 +1,52 @@
+[
+    {
+        "id":0,
+        "url":"https:\/\/mywc.kpkt.gov.my\/toilet\/medan-selera-seksyen-16-bandar-baru-bangi",
+        "name":"Medan Selera Seksyen 16, Bandar Baru Bangi",
+        "address":"Jalan 6C\/5, Selangor",
+        "tags":"Mesra OKU, 24 Jam",
+        "lat":2.942973,
+        "lon":101.764401,
+        "rating":5
+    },
+    {
+        "id":1,
+        "url":"https:\/\/mywc.kpkt.gov.my\/toilet\/medan-selera-parit",
+        "name":"Medan Selera Parit",
+        "address":"Medan Selera Parit, Perak",
+        "tags":"Mesra OKU, 24 Jam",
+        "lat":4.476968,
+        "lon":100.908194,
+        "rating":5
+    },
+    {
+        "id":2,
+        "url":"https:\/\/mywc.kpkt.gov.my\/toilet\/pasar-sungkai",
+        "name":"Pasar Sungkai",
+        "address":"sungkai, Perak",
+        "tags":"Mesra OKU, Berbayar",
+        "lat":4.00067,
+        "lon":101.18209,
+        "rating":5
+    },
+    {
+        "id":3,
+        "url":"https:\/\/mywc.kpkt.gov.my\/toilet\/medan-selera-bidor",
+        "name":"Medan Selera Bidor",
+        "address":"Bidor, Perak",
+        "tags":"Berbayar",
+        "lat":4.05342,
+        "lon":101.16549,
+        "rating":5
+    },
+    {
+        "id":4,
+        "url":"https:\/\/mywc.kpkt.gov.my\/toilet\/tandas-awam-kpkt",
+        "name":"Tandas Awam KPKT",
+        "address":"Jalan Bukit Tinggi, Johor",
+        "tags":"Mesra OKU, Berbayar, Tempat Menukar Lampin, 24 Jam",
+        "lat":3.39771,
+        "lon":101.7679,
+        "rating":5
+    }
+]

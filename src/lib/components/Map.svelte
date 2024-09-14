@@ -80,8 +80,8 @@
   <MapLibre
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     standardControls
-    center={[-73.98, 40.75]}
-    zoom={10}
+    center={[101.5472452, 3.47426978]}
+    zoom={8}
     on:load={handleMapLoad}
   >
   <MapEvents on:click={showLocation}/>
