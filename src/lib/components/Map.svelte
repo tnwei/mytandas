@@ -1,7 +1,8 @@
 <script lang="ts">
   import { MapLibre, Marker, Popup, MapEvents } from 'svelte-maplibre';
   import type { Toilet } from '$lib/types';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
+
 
   export let toilets: Toilet[];
   export let selectedToilet: Toilet | null = null;
@@ -94,19 +95,80 @@
     {#each toilets as toilet}
       <Marker lngLat={[toilet.lon, toilet.lat]} on:click={() => handleMarkerClick(toilet)}>
         <div class="cursor-pointer text-2xl" class:selected={selectedToilet === toilet}>
-          🚽
+          <div class="pin"></div>
+          <div class="pulse"></div>
         </div>
-        <Popup>
-          <strong>{toilet.name}</strong>
-        </Popup>
       </Marker>
     {/each}
   </MapLibre>
 </div>
 
 <style>
-    .selected {
-    color: #4CAF50;
-    font-size: 32px;
+.pin {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: #00cae9;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -20px 0 0 -20px;
+  }
+  .pin:after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: #e6e6e6;
+    position: absolute;
+    border-radius: 50%;
+  }
+  .selected .pin {
+    background: #4CAF50;
+  }
+  .pulse {
+    background: rgba(0, 202, 233, 0.2);
+    border-radius: 50%;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 11px 0px 0px -12px;
+    transform: rotateX(55deg);
+    z-index: -2;
+  }
+  .selected .pulse {
+    background: rgba(76, 175, 80, 0.2);
+  }
+  .pulse:after {
+    content: "";
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    margin: -13px 0 0 -13px;
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0;
+    box-shadow: 0 0 1px 2px #00cae9;
+    animation-delay: 1.1s;
+  }
+  .selected .pulse:after {
+    box-shadow: 0 0 1px 2px #4CAF50;
+  }
+  @keyframes pulsate {
+    0% {
+      transform: scale(0.1, 0.1);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.2, 1.2);
+      opacity: 0;
+    }
   }
 </style>
