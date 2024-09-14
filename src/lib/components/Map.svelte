@@ -62,21 +62,14 @@
   }
 
   function handleMarkerClick(toilet: Toilet) {
-    if (map) {
-      map.flyTo({
-        center: [toilet.lon, toilet.lat],
-        zoom: 14,
-        speed: 1.5
-      });
-    }
     dispatch('selectToilet', toilet);
   }
 
   $: if (selectedToilet && map) {
     map.flyTo({
       center: [selectedToilet.lon, selectedToilet.lat],
-      zoom: 14,
-      speed: 1.5
+      // zoom: 14, // keep current zoom level!
+      speed: 1.2 // default is 1.2
     });
   }
 </script>
