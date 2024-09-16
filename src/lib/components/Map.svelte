@@ -32,6 +32,7 @@
     //     zoom: 13
     //   });
     // }
+    dispatch('mapLoad', map);
   }
 
   function findNearestToilet(userLat: number, userLon: number): Toilet {
